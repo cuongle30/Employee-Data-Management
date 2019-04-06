@@ -8,7 +8,7 @@ var config = {
   messagingSenderId: "459454541114"
 };
 firebase.initializeApp(config);
-
+// Create a reference to Firebase database
 var database = firebase.database();
 
 // Initial values
@@ -34,6 +34,7 @@ document.querySelector("#submit").addEventListener("click", (event) => {
     name: name,
     role: role,
     startDate: startDate,
+    // monthsWorked: monthsWorked,
     monthlyRate: monthlyRate,
     // totalBilled: totalBilled,
     dateAdded: firebase.database.ServerValue.TIMESTAMP
@@ -42,14 +43,27 @@ document.querySelector("#submit").addEventListener("click", (event) => {
   database.ref().on("child_added", (snapshot) => {
     var sv = snapshot.val();
     // Change the HTML to reflect
-    document.querySelector("#name").innerText = sv.name;
-    document.querySelector("#role").innerText = sv.role;
-    document.querySelector("#start-date").innerText = sv.startDate;
-    document.querySelector("#months-worked").innerText = sv.monthsWorked;
-    document.querySelector("#monthly-rate").innerText = sv.monthlyRate;
+    let template = `<tr>`;
+        template += `<td>${sv.name}</td>`;
+        template += `<td>${sv.role}</td>`;
+        template += `<td>${sv.startDate}</td>`;
+        template += `<td class="text-center">${sv.monthsWorked}</td>`;
+        template += `<td class="text-center">${sv.monthlyRate}</td>`;
+        template += `<td class="text-center">${sv.totalBilled}</td>`;
+        template += `</tr>`;
+    document.querySelector("#table-body").innerHTML += template;
+    
+    // document.querySelector("#name").innerText = sv.name;
+    // document.querySelector("#role").innerText = sv.role;
+    // document.querySelector("#start-date").innerText = sv.startDate;
+    // document.querySelector("#months-worked").innerText = sv.monthsWorked;
+    // document.querySelector("#monthly-rate").innerText = sv.monthlyRate;
     // document.querySelector("#total-billed").innerText = sv.totalBilled;
+    
     // Handle the errors
   }, (errorObject) => {
     console.log(`Errors handled: ${errorObject.code}`);
   });
+
+  document.querySelector("form").reset();
 });
