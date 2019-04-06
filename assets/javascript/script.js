@@ -26,8 +26,8 @@ document.querySelector("#submit").addEventListener("click", (event) => {
   role = document.querySelector("#role").value.trim();
   startDate = document.querySelector("#start-date").value.trim();
   monthlyRate = document.querySelector("#monthly-rate").value.trim();
-  monthsWorked = (currentMonth - startDate);
-  totalBilled =  monthsWorked * monthlyRate;
+  // monthsWorked = (currentMonth - startDate);
+  // totalBilled =  monthsWorked * monthlyRate;
 
   // Code for handling the push
   database.ref().push({
@@ -35,7 +35,7 @@ document.querySelector("#submit").addEventListener("click", (event) => {
     role: role,
     startDate: startDate,
     monthlyRate: monthlyRate,
-    totalBilled: totalBilled,
+    // totalBilled: totalBilled,
     dateAdded: firebase.database.ServerValue.TIMESTAMP
   });
 
@@ -47,7 +47,7 @@ document.querySelector("#submit").addEventListener("click", (event) => {
     document.querySelector("#start-date").innerText = sv.startDate;
     document.querySelector("#months-worked").innerText = sv.monthsWorked;
     document.querySelector("#monthly-rate").innerText = sv.monthlyRate;
-    document.querySelector("#total-billed").innerText = sv.totalBilled;
+    // document.querySelector("#total-billed").innerText = sv.totalBilled;
     // Handle the errors
   }, (errorObject) => {
     console.log(`Errors handled: ${errorObject.code}`);
